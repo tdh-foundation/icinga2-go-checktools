@@ -1,4 +1,4 @@
-module icinga2-go-checktools
+module github.com/tdh-foundation/icinga2-go-checktools
 
 go 1.13
 
