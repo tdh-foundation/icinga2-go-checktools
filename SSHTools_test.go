@@ -21,10 +21,10 @@ func Test_SendSSHhasPTY_ArubaController1(t *testing.T) {
 		t.Errorf("Error sending SSH Command: %s", err)
 		return
 	}
-	if ict.stdOutBuffer == "" {
+	if ict.Stdout == "" {
 		t.Errorf("Error command return no response\n")
 	} else {
-		t.Logf("%s", ict.stdOutBuffer)
+		t.Logf("%s", ict.Stdout)
 	}
 }
 
@@ -34,10 +34,10 @@ func Test_SendSSHhasPTY_ArubaController2(t *testing.T) {
 		t.Errorf("Error sending SSH Command: %s", err)
 		return
 	}
-	if ict.stdOutBuffer == "" {
+	if ict.Stdout == "" {
 		t.Errorf("Error command return no response\n")
 	} else {
-		t.Logf("%s", ict.stdOutBuffer)
+		t.Logf("%s", ict.Stdout)
 	}
 }
 
@@ -56,9 +56,9 @@ func Test_SendSSH_CISCO2960(t *testing.T) {
 		t.Errorf("Error sending SSH Command: %s", err)
 		return
 	}
-	if ict.stdOutBuffer == "" {
+	if ict.Stdout == "" {
 		t.Errorf("Error command return no response\n")
 	} else {
-		t.Logf("%s", ict.stdOutBuffer)
+		t.Logf("%s", ict.Stdout)
 	}
 }

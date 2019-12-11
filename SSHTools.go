@@ -33,8 +33,8 @@ const (
 
 //
 type SSHTools struct {
-	sshClient    *ssh.Client
-	stdOutBuffer string
+	sshClient *ssh.Client
+	Stdout    string
 }
 
 // NewSSHTools establish SSH connection to a server and return SSHTools object or nil if an error occurs
@@ -84,7 +84,7 @@ func NewSSHTools(host string, username string, password string, identity string,
 }
 
 // func SendSSH
-// Send command to remote SSH server and save Output in stdOutBuffer
+// Send command to remote SSH server and save Output in Stdout
 func (ict *SSHTools) SendSSH(command string) error {
 
 	session, err := ict.sshClient.NewSession()
@@ -110,7 +110,7 @@ func (ict *SSHTools) SendSSH(command string) error {
 			return fmt.Errorf("SendSSH, error reading output buffer: %s", err)
 		}
 		if n > 0 {
-			ict.stdOutBuffer += string(buff[:n])
+			ict.Stdout += string(buff[:n])
 		}
 		if err == io.EOF {
 			break
@@ -148,7 +148,7 @@ func (ict *SSHTools) SendSSHhasPTY(commands []string, prompt string) error {
 	}
 
 	err = session.Shell()
-	ict.stdOutBuffer = ""
+	ict.Stdout = ""
 	for _, c := range commands {
 		buff := make([]byte, 1024)
 		stdin.Write([]byte(c))
@@ -161,9 +161,9 @@ func (ict *SSHTools) SendSSHhasPTY(commands []string, prompt string) error {
 				return fmt.Errorf("SendSSHhasPTY, error reading output buffer: %s", err)
 			}
 			if n > 0 {
-				ict.stdOutBuffer += string(buff[:n])
+				ict.Stdout += string(buff[:n])
 			}
-			if rePrompt.MatchString(ict.stdOutBuffer) || err == io.EOF {
+			if rePrompt.MatchString(ict.Stdout) || err == io.EOF {
 				break
 			}
 		}
@@ -172,11 +172,11 @@ func (ict *SSHTools) SendSSHhasPTY(commands []string, prompt string) error {
 }
 
 // func CleanStdOutBuffer
-// Remove consecutive blank char and newline of stdOutBuffer
+// Remove consecutive blank char and newline of Stdout
 func (ict *SSHTools) CleanStdOutBuffer() {
 	reBlank := regexp.MustCompile(`(?m)[\s]{2,}`)
 	reNewLine := regexp.MustCompile(`(?m)[\r|\n]+`)
 
-	ict.stdOutBuffer = reBlank.ReplaceAllString(ict.stdOutBuffer, " ")
-	ict.stdOutBuffer = reNewLine.ReplaceAllString(ict.stdOutBuffer, "")
+	ict.Stdout = reBlank.ReplaceAllString(ict.Stdout, " ")
+	ict.Stdout = reNewLine.ReplaceAllString(ict.Stdout, "")
 }
