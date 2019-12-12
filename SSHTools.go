@@ -35,7 +35,6 @@ const (
 type SSHTools struct {
 	sshClient *ssh.Client
 	Stdout    string
-	Msg       string
 }
 
 // NewSSHTools establish SSH connection to a server and return SSHTools object or nil if an error occurs
