@@ -51,7 +51,7 @@ func Test_NewSSHConnection_CISCO2960(t *testing.T) {
 }
 
 func Test_SendSSH_CISCO2960(t *testing.T) {
-	err := ict.SendSSH("show interface status")
+	err := ict.SendSSH("show interface SwStatus")
 	if err != nil {
 		t.Errorf("Error sending SSH Command: %s", err)
 		return

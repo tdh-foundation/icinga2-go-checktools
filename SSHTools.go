@@ -10,27 +10,6 @@ import (
 	"time"
 )
 
-//noinspection GoUnusedConst,GoUnusedConst,GoUnusedConst,GoUnusedConst,GoUnusedConst,GoUnusedConst,GoUnusedConst,GoUnusedConst
-const (
-	// icinga2 Constant
-
-	// Ok Status
-	OkMsg  = "OK"
-	OkExit = 0
-
-	// Warning Status
-	WarMsg  = "WARNING"
-	WarExit = 1
-
-	// Critial Status
-	CriMsg  = "CRITICAL"
-	CriExit = 2
-
-	// Unknown Status
-	UnkMsg  = "UNKNOWN"
-	UnkExit = 3
-)
-
 //
 type SSHTools struct {
 	sshClient *ssh.Client
@@ -85,6 +64,7 @@ func NewSSHTools(host string, username string, password string, identity string,
 
 // func SendSSH
 // Send command to remote SSH server and save Output in Stdout
+//noinspection GoUnhandledErrorResult
 func (ict *SSHTools) SendSSH(command string) error {
 
 	session, err := ict.sshClient.NewSession()
@@ -122,6 +102,7 @@ func (ict *SSHTools) SendSSH(command string) error {
 
 // SendSSHhasPTY send multiple command to remote SSH session simulating a "human" ssh connection
 // SendSSH must be preferred as SendSSHhasPTY, if prompt is misconfigured function will block
+//noinspection GoUnhandledErrorResult
 func (ict *SSHTools) SendSSHhasPTY(commands []string, prompt string) error {
 
 	rePrompt := regexp.MustCompile(prompt)
