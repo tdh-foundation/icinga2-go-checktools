@@ -141,10 +141,12 @@ func (ict *SSHTools) SendSSHhasPTY(commands []string, prompt string) error {
 			if err != nil && err != io.EOF {
 				return fmt.Errorf("SendSSHhasPTY, error reading output buffer: %s", err)
 			}
+			buffAsString := ""
 			if n > 0 {
-				ict.Stdout += string(buff[:n])
+				buffAsString = string(buff[:n])
+				ict.Stdout += buffAsString
 			}
-			if rePrompt.MatchString(ict.Stdout) || err == io.EOF {
+			if rePrompt.MatchString(buffAsString) || err == io.EOF {
 				break
 			}
 		}
